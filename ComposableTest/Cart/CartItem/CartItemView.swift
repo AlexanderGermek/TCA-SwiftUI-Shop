@@ -21,7 +21,9 @@ struct CartItemView: View {
             image
               .resizable()
               .aspectRatio(contentMode: .fit)
-              .frame(width: 100, height: 100)
+              .frame(width: 300, height: 500)
+
+
           } placeholder: {
             ProgressView()
               .frame(width: 100, height: 100)

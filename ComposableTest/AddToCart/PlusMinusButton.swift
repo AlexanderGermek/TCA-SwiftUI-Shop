@@ -43,7 +43,7 @@ struct PlusMinusButton: View {
   }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct PlusMinusButton_Previews: PreviewProvider {
     static var previews: some View {
       PlusMinusButton(store: .init(initialState: AddToCartFeature.State()) {
         return AddToCartFeature()
