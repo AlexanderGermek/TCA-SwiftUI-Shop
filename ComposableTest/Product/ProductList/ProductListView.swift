@@ -9,7 +9,8 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ProductListView: View {
-  let store: StoreOf<ProductListFeature>
+
+  let store: StoreOf<ProductListDomain>
 
   var body: some View {
     WithViewStore(self.store, observe: { $0 }) { viewStore in
@@ -18,7 +19,7 @@ struct ProductListView: View {
           ForEachStore(
             self.store.scope(
               state: \.productListState,
-              action: ProductListFeature.Action
+              action: ProductListDomain.Action
                 .product(id: action:)
             )
           ) {
@@ -44,10 +45,7 @@ struct ProductListView: View {
             action: { .cartOpenedAction($0) }
           )
         ) { store in
-          IfLetStore(self.store.scope(state: \.cartOpenedState,
-                                      action: ProductListFeature.Action.cart)) { store in
             CartListView(store: store)
-          }
         }
       }
     }
@@ -57,9 +55,9 @@ struct ProductListView: View {
 struct ProductListView_Previews: PreviewProvider {
   static var previews: some View {
     ProductListView(store: .init(
-      initialState: ProductListFeature.State()
+      initialState: ProductListDomain.State()
     ) {
-      ProductListFeature(
+      ProductListDomain(
         fetchProducts: { Product.sample },
         uuid: { UUID() }
       )

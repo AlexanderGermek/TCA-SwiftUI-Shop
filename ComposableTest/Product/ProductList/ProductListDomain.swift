@@ -1,5 +1,5 @@
 //
-//  ProductListFeature.swift
+//  ProductListDomain.swift
 //  ComposableTest
 //
 //  Created by GERMEK Aleksandr on 19.10.2023.
@@ -8,31 +8,28 @@
 import ComposableArchitecture
 import SwiftUI
 
-struct ProductListFeature: Reducer {
+struct ProductListDomain: Reducer {
 
   // MARK: - State
   struct State: Equatable {
-    var productListState: IdentifiedArrayOf<ProductFeature.State> = []
-    @PresentationState var cartOpenedState: CartListFeature.State?
+    var productListState: IdentifiedArrayOf<ProductDomain.State> = []
+    @PresentationState var cartOpenedState: CartListDomain.State? //    var cartState: CartListDomain.State?
   }
 
   // MARK: - Action
   enum Action: Equatable {
     case loadProducts
     case loadProductsSuccess(TaskResult<[Product]>)
-    case product(
-      id: ProductFeature.State.ID,
-      action: ProductFeature.Action
-    )
+    case product(id: ProductDomain.State.ID, action: ProductDomain.Action)
     case goToCartButtonTapped // setCartView(isPresented)
-    case cart(CartListFeature.Action)
-    case cartOpenedAction(PresentationAction<CartListFeature.Action>)
+    case cartOpenedAction(PresentationAction<CartListDomain.Action>)
   }
 
   // MARK: - Environment
   var fetchProducts: @Sendable () async throws -> [Product]
   var uuid: @Sendable () -> UUID
 
+  // MARK: - Reducer
   var body: some Reducer<State, Action> {
     Reduce { state, action in
       switch action {
@@ -43,49 +40,68 @@ struct ProductListFeature: Reducer {
           await send(.loadProductsSuccess(result))
         }
 
-      case .loadProductsSuccess(.success(let products)):
-        state.productListState = IdentifiedArrayOf(
-          uniqueElements: products.map
-          {
-            ProductFeature.State(
-              id: uuid(),
-              product: $0)
-          }
-        )
-        return .none
-      case .loadProductsSuccess(.failure(let error)):
-        print("Error getting products = \(error)")
+      case .loadProductsSuccess(let result):
+        switch result {
+        case .success(let products):
+          state.productListState = IdentifiedArrayOf(
+            uniqueElements: products.map
+            {
+              ProductDomain.State(
+                id: uuid(),
+                product: $0)
+            }
+          )
+
+        case .failure(let error):
+          print("Error getting products = \(error)")
+        }
+
         return .none
       case .product:
         return .none
       case .goToCartButtonTapped:
         state.cartOpenedState =
-        CartListFeature.State(
+        CartListDomain.State(
           cartItems: IdentifiedArrayOf(
             uniqueElements: state.productListState.compactMap {
               $0.count > 0 ?
-              CartItemFeature.State(
-                id: UUID(),
+              CartItemDomain.State(
+                id: uuid(),
                 cartItem: CartItem(product: $0.product, quantity: $0.count)
               ) : nil
             }))
         return .none
-      case .cart(let action):
+      case .cartOpenedAction(.dismiss): break
+
+      case .cartOpenedAction(.presented(let action)):
+
         switch action {
         case .didPressCloseButton:
           state.cartOpenedState = nil
-        }
-        return .none
-      case .cartOpenedAction:
-        return .none
-      }
 
+        case .cartItem(_, action: let action):
+          switch action {
+          case .deleteCartItem(let deletedProduct):
+            print("PLD LOL")
+            guard let index = state.productListState.firstIndex(where: {
+              $0.product.id == deletedProduct.id
+            }) else { return .none }
+
+            let productStateID = state.productListState[index].id
+            state.productListState[id: productStateID]?.count = 0
+          }
+
+        default: break
+
+        }
+      }
+      return .none
     }
-    .forEach(\.productListState, action: /ProductListFeature.Action.product(id:action:)) {
-      ProductFeature()
+    .forEach(\.productListState, action: /ProductListDomain.Action.product(id:action:)) {
+      ProductDomain()
     }
-    .ifLet(\.$cartOpenedState, action: /ProductListFeature.Action.cartOpenedAction) {
-      CartListFeature()
+    .ifLet(\.$cartOpenedState, action: /ProductListDomain.Action.cartOpenedAction) {
+      CartListDomain()
     }
   }
 }

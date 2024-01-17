@@ -10,12 +10,10 @@ import Foundation
 struct Product: Equatable, Identifiable {
     let id: Int
     let title: String
-    let price: Double // Update to Currency
+    let price: Decimal
     let description: String
     let category: String // Update to enum
     let imageString: String
-
-    // Add rating later...
 }
 extension Product: Decodable {
     enum ProductKeys: String, CodingKey {
@@ -31,7 +29,7 @@ extension Product: Decodable {
         let container = try decoder.container(keyedBy: ProductKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
         self.title = try container.decode(String.self, forKey: .title)
-        self.price = try container.decode(Double.self, forKey: .price)
+        self.price = try container.decode(Decimal.self, forKey: .price)
         self.description = try container.decode(String.self, forKey: .description)
         self.category = try container.decode(String.self, forKey: .category)
         self.imageString = try container.decode(String.self, forKey: .image)

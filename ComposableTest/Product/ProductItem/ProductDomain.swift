@@ -1,5 +1,5 @@
 //
-//  ProductFeature.swift
+//  ProductDomain.swift
 //  ComposableTest
 //
 //  Created by GERMEK Aleksandr on 19.10.2023.
@@ -9,7 +9,7 @@ import ComposableArchitecture
 import SwiftUI
 
 /// Слой ячейки продукта
-struct ProductFeature: Reducer {
+struct ProductDomain: Reducer {
   
   // MARK: - State
   struct State: Equatable, Identifiable {
@@ -30,7 +30,7 @@ struct ProductFeature: Reducer {
   }
 
   var body: some Reducer<State, Action> {
-      Scope(state: \.addToCartState, action: /ProductFeature.Action.addToCart) {
+      Scope(state: \.addToCartState, action: /ProductDomain.Action.addToCart) {
           AddToCartFeature()
       }
       Reduce { state, action in

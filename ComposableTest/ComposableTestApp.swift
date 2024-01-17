@@ -12,9 +12,9 @@ struct ComposableTestApp: App {
     var body: some Scene {
         WindowGroup {
           ProductListView(store: .init(
-            initialState: ProductListFeature.State()
+            initialState: ProductListDomain.State()
           ) {
-            ProductListFeature(
+            ProductListDomain(
               fetchProducts: { Product.sample },
               uuid: { UUID() }
             )

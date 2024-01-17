@@ -9,7 +9,7 @@ import ComposableArchitecture
 import SwiftUI
 
 struct ProductCellView: View {
-  let store: StoreOf<ProductFeature>
+  let store: StoreOf<ProductDomain>
 
   var body: some View {
     WithViewStore(self.store, observe: { $0 }) { viewStore in
@@ -33,6 +33,7 @@ struct ProductCellView: View {
             .fontWeight(.bold)
 
           Text("\(viewStore.product.description.description)")
+            .font(.custom("AmericanTypewriter", size: 18))
 
           HStack {
             Text("$\(viewStore.product.price.description)")
@@ -44,14 +45,14 @@ struct ProductCellView: View {
             AddToCartButtonView(
               store: self.store.scope(
                 state: \.addToCartState,
-                action: ProductFeature.Action.addToCart
+                action: ProductDomain.Action.addToCart
               )
             )
           }
         }
         .font(.custom("AmericanTypewriter", size: 20))
       }
-      .padding(20)
+      .padding(0)
     }
   }
 }
@@ -59,10 +60,10 @@ struct ProductCellView: View {
 struct ProductCell_Previews: PreviewProvider {
   static var previews: some View {
     ProductCellView(
-      store: .init(initialState: ProductFeature.State(
+      store: .init(initialState: ProductDomain.State(
         id: UUID(),
         product: Product.sample[0])) {
-          return ProductFeature()
+          return ProductDomain()
         }
     )
     .previewLayout(.fixed(width: 300, height: 300))
