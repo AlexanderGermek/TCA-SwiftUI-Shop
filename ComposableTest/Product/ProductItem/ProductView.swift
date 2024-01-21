@@ -57,15 +57,15 @@ struct ProductCellView: View {
 	}
 }
 
-struct ProductCell_Previews: PreviewProvider {
-	static var previews: some View {
-		ProductCellView(
-			store: .init(initialState: ProductDomain.State(
-				id: UUID(),
-				product: Product.sample[0])) {
-					return ProductDomain()
-				}
-		)
-		.previewLayout(.fixed(width: 300, height: 300))
-	}
+// MARK: - Preview
+#Preview {
+	ProductCellView(
+		store: .init(initialState: ProductDomain.State(
+			id: UUID(),
+			product: Product.sample[0])) {
+				return ProductDomain()
+			}
+	)
+	.previewLayout(.fixed(width: 300, height: 300))
+	.padding(20)
 }

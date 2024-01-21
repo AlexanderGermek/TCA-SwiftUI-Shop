@@ -67,15 +67,14 @@ struct CartItemView: View {
 	}
 }
 
-struct CartItemView_Previews: PreviewProvider {
-	static var previews: some View {
-		CartItemView(store: .init(
-			initialState: CartItemDomain.State(
-				id: UUID(),
-				cartItem: CartItem.sample[0])
-		) {
-			CartItemDomain()
-		})
-		.previewLayout(.fixed(width: 300, height: 300))
-	}
+// MARK: - Preview
+#Preview {
+	CartItemView(store: .init(
+		initialState: CartItemDomain.State(
+			id: UUID(),
+			cartItem: CartItem.sample[0])
+	) {
+		CartItemDomain()
+	})
+	.previewLayout(.fixed(width: 300, height: 300))
 }

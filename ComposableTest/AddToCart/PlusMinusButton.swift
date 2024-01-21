@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct PlusMinusButton: View {
 	let store: StoreOf<AddToCartFeature>
-
+	
 	var body: some View {
 		WithViewStore(self.store, observe: { $0 }) { viewStore in
 			HStack {
@@ -24,10 +24,10 @@ struct PlusMinusButton: View {
 						.cornerRadius(10)
 				}
 				.buttonStyle(.plain)
-
+				
 				Text(viewStore.count.description)
 					.padding(5)
-
+				
 				Button {
 					viewStore.send(.didTapPlusButton)
 				} label: {
@@ -43,10 +43,9 @@ struct PlusMinusButton: View {
 	}
 }
 
-struct PlusMinusButton_Previews: PreviewProvider {
-	static var previews: some View {
-		PlusMinusButton(store: .init(initialState: AddToCartFeature.State()) {
-			return AddToCartFeature()
-		})
-	}
+// MARK: - Preview
+#Preview {
+	PlusMinusButton(store: .init(initialState: AddToCartFeature.State()) {
+		return AddToCartFeature()
+	})
 }

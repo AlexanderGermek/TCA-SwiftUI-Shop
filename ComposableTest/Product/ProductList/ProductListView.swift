@@ -9,9 +9,9 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ProductListView: View {
-
+	
 	let store: StoreOf<ProductListDomain>
-
+	
 	var body: some View {
 		WithViewStore(self.store, observe: { $0 }) { viewStore in
 			NavigationStack {
@@ -52,12 +52,11 @@ struct ProductListView: View {
 	}
 }
 
-struct ProductListView_Previews: PreviewProvider {
-	static var previews: some View {
-		ProductListView(store: .init(
-			initialState: ProductListDomain.State()
-		) {
-			ProductListDomain(uuid: { UUID() })
-		})
-	}
+// MARK: - Preview
+#Preview {
+	ProductListView(store: .init(
+		initialState: ProductListDomain.State()
+	) {
+		ProductListDomain(uuid: { UUID() })
+	})
 }

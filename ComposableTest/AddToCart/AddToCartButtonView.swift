@@ -9,9 +9,9 @@ import ComposableArchitecture
 import SwiftUI
 
 struct AddToCartButtonView: View {
-	
+
 	let store: StoreOf<AddToCartFeature>
-	
+
 	var body: some View {
 		WithViewStore(self.store, observe: { $0 }) { viewStore in
 			if viewStore.count > 0 {
@@ -32,11 +32,9 @@ struct AddToCartButtonView: View {
 	}
 }
 
-// MARK: - AddToCartButtonView_Preview
-struct AddToCartButtonView_Preview: PreviewProvider {
-	static var previews: some View {
-		AddToCartButtonView(store: .init(initialState: AddToCartFeature.State()) {
-			return AddToCartFeature()
-		})
-	}
+// MARK: - Preview
+#Preview {
+	AddToCartButtonView(store: .init(initialState: AddToCartFeature.State()) {
+		return AddToCartFeature()
+	})
 }

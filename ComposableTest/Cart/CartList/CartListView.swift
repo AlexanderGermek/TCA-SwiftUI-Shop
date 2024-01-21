@@ -46,7 +46,6 @@ struct CartListView: View {
 							Text("Pay $\(viewStore.totalPrice.formattedWithSeparator)")
 								.font(.custom("AmericanTypewriter", size: 30))
 								.foregroundColor(.white)
-
 							Spacer()
 						}
 
@@ -58,26 +57,25 @@ struct CartListView: View {
 					.disabled(viewStore.isPayButtonDisable)
 				}
 				.alert(store: self.store.scope(
-						state: \.$confirmPurchaseAlertState,
-						action: { .purchaseAlert($0) }))
+					state: \.$confirmPurchaseAlertState,
+					action: { .purchaseAlert($0) }))
 				.alert(store: self.store.scope(
-						state: \.$resultPurchaseAlertState,
-						action: { childAction in .resultAlert }))
+					state: \.$resultPurchaseAlertState,
+					action: { childAction in .resultAlert }))
 			}
 		}
 	}
 }
 
-struct CartListView_Previews: PreviewProvider {
-	static var previews: some View {
-		CartListView(store: .init(
-			initialState: CartListDomain.State(
-				cartItems: IdentifiedArrayOf(
-					uniqueElements: CartItem.sample.map {
-						CartItemDomain.State(id: UUID(), cartItem: $0)
-					}))
-		) {
-			CartListDomain()
-		})
-	}
+// MARK: - Preview
+#Preview {
+	CartListView(store: .init(
+		initialState: CartListDomain.State(
+			cartItems: IdentifiedArrayOf(
+				uniqueElements: CartItem.sample.map {
+					CartItemDomain.State(id: UUID(), cartItem: $0)
+				}))
+	) {
+		CartListDomain()
+	})
 }
