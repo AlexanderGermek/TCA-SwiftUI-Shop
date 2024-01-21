@@ -12,18 +12,10 @@ import ComposableArchitecture
 struct UserProfileService {
 
 	enum Constants {
-		static let profileURL = "https://fakestoreapi.com/products"
+		static let profileURL = "https://fakestoreapi.com/users\(Int.random(in: 1...20))"
 	}
 
 	var fetchUserProfile: @Sendable () async throws -> UserProfileModel
-}
-
-// MARK: - DependencyValues
-extension DependencyValues {
-	var userProfileService: UserProfileService {
-		get { self[UserProfileService.self] }
-		set { self[UserProfileService.self] = newValue }
-	}
 }
 
 // MARK: - DependencyKey

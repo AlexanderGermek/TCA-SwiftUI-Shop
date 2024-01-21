@@ -19,16 +19,35 @@ struct UserProfileDomain {
 	// MARK: - Action
 	enum Action: Equatable {
 		case loadUserProfile
-		case loadUserProfileSuccess(TaskResult<[Product]>)
+		case loadUserProfileSuccess(TaskResult<UserProfileModel>)
 	}
 
 	// MARK: - Dependencies
-	// @Dependency(\.) var
+	 @Dependency(\.userProfileService) var userProfileService
 
 	// MARK: - Reducer
 	var body: some Reducer<State, Action> {
 		Reduce { state, action in
-			return .send(.test)
+
+			switch action {
+				
+			case .loadUserProfile:
+				return .run { send in
+					let result = await TaskResult { try await self.userProfileService.fetchUserProfile() }
+					await send(.loadUserProfileSuccess(result))
+				}
+
+			case .loadUserProfileSuccess(let result):
+				switch result {
+				case .success(let profile):
+					state.profileState = profile
+					print(profile)
+				case .failure(let error):
+					print(error)
+				}
+			}
+
+			return .none
 		}
 	}
 }

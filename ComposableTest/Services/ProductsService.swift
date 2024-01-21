@@ -34,14 +34,6 @@ struct ProductService {
 	}
 }
 
-// MARK: - DependencyValues
-extension DependencyValues {
-	var productService: ProductService {
-		get { self[ProductService.self] }
-		set { self[ProductService.self] = newValue }
-	}
-}
-
 // MARK: - DependencyKey
 extension ProductService: DependencyKey {
 

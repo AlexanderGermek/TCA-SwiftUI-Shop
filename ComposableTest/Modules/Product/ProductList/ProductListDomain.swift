@@ -31,7 +31,6 @@ struct ProductListDomain: Reducer {
 
 	// MARK: - Dependencies
 	@Dependency(\.productService) var productService
-//	var fetchProducts: @Sendable () async throws -> [Product]
 	var uuid: @Sendable () -> UUID
 
 	// MARK: - Reducer
@@ -41,7 +40,6 @@ struct ProductListDomain: Reducer {
 
 			case .loadProducts:
 				guard state.dataStatus != .loading else { return .none }
-
 				state.dataStatus = .loading
 				return .run { send in
 					let result = await TaskResult { try await self.productService.fetchProducts() }
@@ -49,7 +47,6 @@ struct ProductListDomain: Reducer {
 				}
 
 			case .loadProductsSuccess(let result):
-
 				switch result {
 				case .success(let products):
 					state.dataStatus = .success
@@ -61,7 +58,6 @@ struct ProductListDomain: Reducer {
 						product: $0)
 						}
 					)
-
 				case .failure(let error):
 					state.dataStatus = .error
 					print("Error getting products = \(error)")
