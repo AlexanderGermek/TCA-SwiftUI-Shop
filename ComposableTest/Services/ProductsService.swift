@@ -8,20 +8,6 @@
 import Foundation
 import ComposableArchitecture
 
-enum NetworkError: Error {
-	case networkError
-	case invalidURL
-	case decodeError
-	case encodeError
-	case uploadError
-	case httpResponse
-}
-
-enum HTTPMethod: String {
-	case get = "GET"
-	case post = "POST"
-}
-
 /// Сервис для работы с API продуктов
 struct ProductService {
 
