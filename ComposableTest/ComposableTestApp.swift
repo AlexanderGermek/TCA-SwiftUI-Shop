@@ -9,16 +9,13 @@ import SwiftUI
 
 @main
 struct ComposableTestApp: App {
-    var body: some Scene {
-        WindowGroup {
-          ProductListView(store: .init(
-            initialState: ProductListDomain.State()
-          ) {
-            ProductListDomain(
-              fetchProducts: { Product.sample },
-              uuid: { UUID() }
-            )
-          })
-        }
-    }
+	var body: some Scene {
+		WindowGroup {
+			ProductListView(store: .init(
+				initialState: ProductListDomain.State()
+			) {
+				ProductListDomain(uuid: { UUID() })
+			})
+		}
+	}
 }
