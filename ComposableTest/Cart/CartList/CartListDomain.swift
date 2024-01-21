@@ -78,8 +78,7 @@ struct CartListDomain: Reducer {
 
 			case .didTapPayButton:
 				let totalPrice = state.totalPrice.formattedWithSeparator
-				state.confirmPurchaseAlertState =
-				AlertState {
+				state.confirmPurchaseAlertState = AlertState {
 					TextState("Confirm your purchase")
 				} actions: {
 					return [.default(TextState("Yes, pay!"), action: .send(.confirmPurchase)),

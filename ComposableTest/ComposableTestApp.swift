@@ -6,16 +6,18 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 @main
 struct ComposableTestApp: App {
+
+	private static let store = Store(initialState: ProductListDomain.State()) {
+		ProductListDomain(uuid: { UUID() })
+	}
+
 	var body: some Scene {
 		WindowGroup {
-			ProductListView(store: .init(
-				initialState: ProductListDomain.State()
-			) {
-				ProductListDomain(uuid: { UUID() })
-			})
+			ProductListView(store: ComposableTestApp.store)
 		}
 	}
 }
