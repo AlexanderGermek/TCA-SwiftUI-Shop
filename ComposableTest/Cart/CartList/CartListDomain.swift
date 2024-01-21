@@ -15,8 +15,11 @@ struct CartListDomain: Reducer {
 		var cartItems: IdentifiedArrayOf<CartItemDomain.State> = []
 		var totalPrice: Decimal = 0
 		var isPayButtonDisable = false
+		var dataStatus = DataStatus.initial
 		@PresentationState var confirmPurchaseAlertState: AlertState<Action.PurchaseAlert>?
 		@PresentationState var resultPurchaseAlertState: AlertState<Action>?
+
+		var isSendingCartItems: Bool { dataStatus == .loading }
 	}
 
 	// MARK: - Action
@@ -87,6 +90,7 @@ struct CartListDomain: Reducer {
 					TextState("Do you want to proceed with your purchase of $\(totalPrice)?")
 				}
 			case .purchaseAlert(.presented(.confirmPurchase)):
+				state.dataStatus = .loading
 				let items = state.cartItems.map { $0.cartItem }
 
 				return .run { send in
@@ -107,9 +111,11 @@ struct CartListDomain: Reducer {
 				case .success(let string):
 					title = "Success \(string)"
 					message = "The order was successfully placed and paid"
+					state.dataStatus = .success
 				case .failure(let error):
 					title = "Error: \(error.localizedDescription)"
 					message = "Error when placing an order"
+					state.dataStatus = .error
 				}
 
 				state.resultPurchaseAlertState =

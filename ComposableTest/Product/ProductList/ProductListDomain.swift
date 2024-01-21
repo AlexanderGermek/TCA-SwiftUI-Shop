@@ -13,7 +13,11 @@ struct ProductListDomain: Reducer {
 	// MARK: - State
 	struct State: Equatable {
 		var productListState: IdentifiedArrayOf<ProductDomain.State> = []
-		@PresentationState var cartOpenedState: CartListDomain.State? //    var cartState: CartListDomain.State?
+		var dataStatus = DataStatus.initial
+		@PresentationState var cartOpenedState: CartListDomain.State?
+
+		var isShouldShowError: Bool { dataStatus == .error }
+		var isLoading: Bool { dataStatus == .loading }
 	}
 
 	// MARK: - Action
@@ -36,14 +40,19 @@ struct ProductListDomain: Reducer {
 			switch action {
 
 			case .loadProducts:
+				guard state.dataStatus != .loading else { return .none }
+
+				state.dataStatus = .loading
 				return .run { send in
 					let result = await TaskResult { try await self.productService.fetchProducts() }
 					await send(.loadProductsSuccess(result))
 				}
 
 			case .loadProductsSuccess(let result):
+
 				switch result {
 				case .success(let products):
+					state.dataStatus = .success
 					state.productListState = IdentifiedArrayOf(
 						uniqueElements: products.map
 						{
@@ -54,6 +63,7 @@ struct ProductListDomain: Reducer {
 					)
 
 				case .failure(let error):
+					state.dataStatus = .error
 					print("Error getting products = \(error)")
 				}
 

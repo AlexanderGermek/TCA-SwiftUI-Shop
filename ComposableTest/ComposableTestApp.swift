@@ -11,13 +11,13 @@ import ComposableArchitecture
 @main
 struct ComposableTestApp: App {
 
-	private static let store = Store(initialState: ProductListDomain.State()) {
+	private let store = Store(initialState: ProductListDomain.State()) {
 		ProductListDomain(uuid: { UUID() })
 	}
 
 	var body: some Scene {
 		WindowGroup {
-			ProductListView(store: ComposableTestApp.store)
+			ProductListView(store: store)
 		}
 	}
 }

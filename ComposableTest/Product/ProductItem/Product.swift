@@ -12,7 +12,7 @@ struct Product: Equatable, Identifiable {
 	let title: String
 	let price: Decimal
 	let description: String
-	let category: String // Update to enum
+	let category: String
 	let imageString: String
 }
 

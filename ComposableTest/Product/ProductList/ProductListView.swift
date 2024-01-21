@@ -9,23 +9,33 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ProductListView: View {
-	
+
 	let store: StoreOf<ProductListDomain>
-	
+
 	var body: some View {
 		WithViewStore(self.store, observe: { $0 }) { viewStore in
 			NavigationStack {
-				List {
-					ForEachStore(
-						self.store.scope(
-							state: \.productListState,
-							action: ProductListDomain.Action
-								.product(id: action:)
-						)
-					) {
-						ProductCellView(store: $0)
+				Group {
+					if viewStore.isLoading {
+						ProgressView().frame(width: 200, height: 200, alignment: .center)
+					} else if viewStore.isShouldShowError {
+						ProductListErrorView(retryAction: {
+							viewStore.send(.loadProducts)
+						})
+					} else {
+						List {
+							ForEachStore(
+								self.store.scope(
+									state: \.productListState,
+									action: ProductListDomain.Action.product(id: action:)
+								)
+							) {
+								ProductCellView(store: $0)
+							}
+						}
 					}
 				}
+
 				.task {
 					viewStore.send(.loadProducts)
 				}
