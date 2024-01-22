@@ -11,7 +11,7 @@ import ComposableArchitecture
 /// Сервис для работы с API профиля пользователя
 struct UserProfileService {
 
-	enum Constants { //\(Int.random(in: 1...20))
+	enum Constants {
 		static let profileURL = "https://fakestoreapi.com/users/5"
 	}
 
