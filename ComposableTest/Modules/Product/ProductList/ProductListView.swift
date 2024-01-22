@@ -67,6 +67,6 @@ struct ProductListView: View {
 	ProductListView(store: .init(
 		initialState: ProductListDomain.State()
 	) {
-		ProductListDomain(uuid: { UUID() })
+		ProductListDomain()
 	})
 }

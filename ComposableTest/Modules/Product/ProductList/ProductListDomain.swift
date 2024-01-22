@@ -25,13 +25,13 @@ struct ProductListDomain: Reducer {
 		case loadProducts
 		case loadProductsSuccess(TaskResult<[Product]>)
 		case product(id: ProductDomain.State.ID, action: ProductDomain.Action)
-		case goToCartButtonTapped // setCartView(isPresented)
+		case goToCartButtonTapped
 		case cartOpenedAction(PresentationAction<CartListDomain.Action>)
 	}
 
 	// MARK: - Dependencies
 	@Dependency(\.productService) var productService
-	var uuid: @Sendable () -> UUID
+	let uuid: @Sendable () -> UUID = { UUID() }
 
 	// MARK: - Reducer
 	var body: some Reducer<State, Action> {
@@ -89,7 +89,6 @@ struct ProductListDomain: Reducer {
 				case .cartItem(_, action: let action):
 					switch action {
 					case .deleteCartItem(let deletedProduct):
-						print("PLD LOL")
 						guard let index = state.productListState.firstIndex(where: {
 							$0.product.id == deletedProduct.id
 						}) else { return .none }

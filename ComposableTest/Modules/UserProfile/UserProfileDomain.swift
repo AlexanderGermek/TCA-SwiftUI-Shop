@@ -8,12 +8,16 @@
 import Foundation
 import ComposableArchitecture
 
-struct UserProfileDomain {
+struct UserProfileDomain: Reducer {
 
 	// MARK: - State
 	struct State: Equatable {
 		var profileState: UserProfileModel = .default
-		
+
+		var fullName: String {
+			return profileState.firstName + " " + profileState.lastName
+		}
+
 	}
 
 	// MARK: - Action
