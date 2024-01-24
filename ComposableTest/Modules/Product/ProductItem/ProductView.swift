@@ -10,14 +10,12 @@ import SwiftUI
 
 struct ProductCellView: View {
 	let store: StoreOf<ProductDomain>
-	
+
 	var body: some View {
 		WithViewStore(self.store, observe: { $0 }) { viewStore in
-			
 			VStack {
-				AsyncImage(
-					url: URL(string: viewStore.product.imageString)
-				) { image in
+
+				CacheAsyncImage(url: URL(string: viewStore.product.imageString)) { image in
 					image
 						.resizable()
 						.aspectRatio(contentMode: .fit)
@@ -26,22 +24,22 @@ struct ProductCellView: View {
 					ProgressView()
 						.frame(height: 300)
 				}
-				
+
 				VStack(alignment: .leading) {
 					Text(viewStore.product.title)
 						.font(.custom("AmericanTypewriter", size: 25))
 						.fontWeight(.bold)
-					
+
 					Text("\(viewStore.product.description.description)")
 						.font(.custom("AmericanTypewriter", size: 18))
-					
+
 					HStack {
 						Text("$\(viewStore.product.price.description)")
 							.font(.custom("AmericanTypewriter", size: 25))
 							.fontWeight(.bold)
-						
+
 						Spacer()
-						
+
 						AddToCartButtonView(
 							store: self.store.scope(
 								state: \.addToCartState,

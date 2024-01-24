@@ -15,9 +15,7 @@ struct CartItemView: View {
 		WithViewStore(self.store, observe: { $0 }) { viewStore in
 			VStack {
 				HStack {
-					AsyncImage(
-						url: URL(string: viewStore.cartItem.product.imageString)
-					) { image in
+					CacheAsyncImage(url: URL(string: viewStore.cartItem.product.imageString)) { image in
 						image
 							.resizable()
 							.aspectRatio(contentMode: .fit)

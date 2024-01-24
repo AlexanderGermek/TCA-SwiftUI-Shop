@@ -45,7 +45,6 @@ struct UserProfileDomain: Reducer {
 				switch result {
 				case .success(let profile):
 					state.profileState = profile
-					print(profile)
 				case .failure(let error):
 					print(error)
 				}
