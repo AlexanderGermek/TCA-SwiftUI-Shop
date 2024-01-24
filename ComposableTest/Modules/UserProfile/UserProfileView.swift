@@ -15,23 +15,38 @@ struct UserProfileView: View {
 	var body: some View {
 		WithViewStore(self.store, observe: { $0 }) { viewStore in
 			NavigationStack {
-				Form {
-					Section {
-						Text(viewStore.fullName.capitalized)
-					} header: {
-						Text("Full name")
-					}
+				if viewStore.isLoading {
+					ProgressView()
+						.scaleEffect(3)
+						.frame(width: 200, height: 200)
+				} else {
+					if viewStore.profileState == .default {
+						ErrorView(
+							title: "Error",
+							subtitle: "Oops, fetch user info is failed!") {
+								viewStore.send(.loadUserProfile)
+							}
+					} else {
+						Form {
+							Section {
+								Text(viewStore.fullName.capitalized)
+							} header: {
+								Text("Full name")
+							}
 
-					Section {
-						Text(viewStore.profileState.email)
-					} header: {
-						Text("Email")
+							Section {
+								Text(viewStore.profileState.email)
+							} header: {
+								Text("Email")
+							}
+						}
+						.navigationTitle("Profile")
 					}
 				}
-				.task {
-					viewStore.send(.loadUserProfile)
-				}
-				.navigationTitle("Profile")
+			}
+			.navigationTitle("as")
+			.onAppear {
+				viewStore.send(.loadUserProfile)
 			}
 		}
 	}

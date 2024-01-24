@@ -13,7 +13,7 @@ struct UserProfileDomain: Reducer {
 	// MARK: - State
 	struct State: Equatable {
 		var profileState: UserProfileModel = .default
-
+		var isLoading = false
 		var fullName: String {
 			return profileState.firstName + " " + profileState.lastName
 		}
@@ -36,12 +36,14 @@ struct UserProfileDomain: Reducer {
 			switch action {
 				
 			case .loadUserProfile:
+				state.isLoading = true
 				return .run { send in
 					let result = await TaskResult { try await self.userProfileService.fetchUserProfile() }
 					await send(.loadUserProfileSuccess(result))
 				}
 
 			case .loadUserProfileSuccess(let result):
+				state.isLoading = false
 				switch result {
 				case .success(let profile):
 					state.profileState = profile

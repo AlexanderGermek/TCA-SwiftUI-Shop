@@ -9,6 +9,7 @@ import ComposableArchitecture
 import SwiftUI
 
 struct ProductCellView: View {
+
 	let store: StoreOf<ProductDomain>
 
 	var body: some View {

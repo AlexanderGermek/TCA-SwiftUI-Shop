@@ -17,11 +17,15 @@ struct ProductListView: View {
 			NavigationStack {
 				Group {
 					if viewStore.isLoading {
-						ProgressView().frame(width: 200, height: 200, alignment: .center)
+						ProgressView()
+							.scaleEffect(3)
+							.frame(width: 200, height: 200, alignment: .center)
 					} else if viewStore.isShouldShowError {
-						ProductListErrorView(retryAction: {
+						ErrorView(
+							title: "Error",
+							subtitle: "Oops, we coudn't fetch products") {
 							viewStore.send(.loadProducts)
-						})
+						}
 					} else {
 						List {
 							ForEachStore(

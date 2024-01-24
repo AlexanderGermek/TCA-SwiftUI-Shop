@@ -1,5 +1,5 @@
 //
-//  ProductListErrorView.swift
+//  ErrorView.swift
 //  ComposableTest
 //
 //  Created by GERMEK Aleksandr on 21.01.2024.
@@ -7,7 +7,10 @@
 
 import SwiftUI
 
-struct ProductListErrorView: View {
+struct ErrorView: View {
+
+	let title: String
+	let subtitle: String
 	let retryAction: () -> Void
 
 	var body: some View {
@@ -18,8 +21,13 @@ struct ProductListErrorView: View {
 				.rotationEffect(.radians(.pi/2))
 				.padding(.bottom, 20)
 
-			Text("Oops, we coudn't fetch products")
+			Text(title)
 				.font(.custom("AmericanTypewriter", size: 28))
+				.fontWeight(.bold)
+				.padding()
+
+			Text(subtitle)
+				.font(.custom("AmericanTypewriter", size: 20))
 
 			Button {
 
@@ -37,5 +45,8 @@ struct ProductListErrorView: View {
 }
 
 #Preview {
-	ProductListErrorView(retryAction: {})
+	ErrorView(title: "Title",
+						subtitle: "Subtitle",
+						retryAction: { print("Retry") }
+	)
 }
