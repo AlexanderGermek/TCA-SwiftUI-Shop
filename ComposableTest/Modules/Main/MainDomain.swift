@@ -45,9 +45,11 @@ struct MainDomain: Reducer {
 			case .tabSelected(let tab):
 				state.currentTab = tab
 
-			case .productList(let productAction): break
+			case .productList:
+				break
 
-			case .userProfile(let userAction): break
+			case .userProfile:
+				break
 			}
 
 			return .none
