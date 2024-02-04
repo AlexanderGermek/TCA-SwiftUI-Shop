@@ -44,8 +44,7 @@ struct UserProfileView: View {
 					}
 				}
 			}
-			.navigationTitle("as")
-			.onAppear {
+			.onViewDidLoad {
 				viewStore.send(.loadUserProfile)
 			}
 		}

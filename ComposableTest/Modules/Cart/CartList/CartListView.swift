@@ -70,16 +70,16 @@ struct CartListView: View {
 						}
 					}
 					.navigationTitle("Cart")
-					.onAppear {
-						viewStore.send(.setTotalPrice)
-					}
-					.alert(store: self.store.scope(
-						state: \.$confirmPurchaseAlertState,
-						action: { .purchaseAlert($0) }))
-					.alert(store: self.store.scope(
-						state: \.$resultPurchaseAlertState,
-						action: { childAction in .resultAlert }))
 				}
+				.onViewDidLoad {
+					viewStore.send(.setTotalPrice)
+				}
+				.alert(store: self.store.scope(
+					state: \.$confirmPurchaseAlertState,
+					action: { .purchaseAlert($0) }))
+				.alert(store: self.store.scope(
+					state: \.$resultPurchaseAlertState,
+					action: { childAction in .resultAlert }))
 
 				if viewStore.isSendingCartItems {
 					Color.black.opacity(0.2).ignoresSafeArea()
