@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		122663DC2B6FF3BA007F21D0 /* View+OnViewDidLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122663DB2B6FF3BA007F21D0 /* View+OnViewDidLoad.swift */; };
 		700712A62B57AADC00BA5EB0 /* Formatter+Numeric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700712A52B57AADC00BA5EB0 /* Formatter+Numeric.swift */; };
 		703152422AF2669E00B08340 /* CartItemDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703152412AF2669E00B08340 /* CartItemDomain.swift */; };
 		703152442AF2670A00B08340 /* CartListDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 703152432AF2670A00B08340 /* CartListDomain.swift */; };
@@ -60,6 +61,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		122663DB2B6FF3BA007F21D0 /* View+OnViewDidLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+OnViewDidLoad.swift"; sourceTree = "<group>"; };
 		700712A52B57AADC00BA5EB0 /* Formatter+Numeric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+Numeric.swift"; sourceTree = "<group>"; };
 		703152412AF2669E00B08340 /* CartItemDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItemDomain.swift; sourceTree = "<group>"; };
 		703152432AF2670A00B08340 /* CartListDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartListDomain.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			children = (
 				700712A52B57AADC00BA5EB0 /* Formatter+Numeric.swift */,
 				70C7DED52B5D97F400059610 /* DependencyValues+Extensions.swift */,
+				122663DB2B6FF3BA007F21D0 /* View+OnViewDidLoad.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -477,6 +480,7 @@
 				70B175942AE155430041A77E /* PlusMinusButton.swift in Sources */,
 				700712A62B57AADC00BA5EB0 /* Formatter+Numeric.swift in Sources */,
 				70C7DED62B5D97F400059610 /* DependencyValues+Extensions.swift in Sources */,
+				122663DC2B6FF3BA007F21D0 /* View+OnViewDidLoad.swift in Sources */,
 				703152422AF2669E00B08340 /* CartItemDomain.swift in Sources */,
 				70C7DEC22B5D6D1400059610 /* ErrorView.swift in Sources */,
 				70B175922AE155430041A77E /* ComposableTestApp.swift in Sources */,
